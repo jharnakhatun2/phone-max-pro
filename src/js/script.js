@@ -5,6 +5,7 @@ const getId = id => document.getElementById(id);
 // Select Elements
 const cardContainer = getId('card-container');
 const searchInput = getId('search-input');
+const loader = getId('loader');
 
 
 //fetch API data
@@ -17,7 +18,7 @@ const loadData = async (userText) => {
 
 //display fetch API data
 const displayData = (phones) => {
-    
+
     // clear card container
     cardContainer.textContent = '';
 
@@ -42,13 +43,26 @@ const displayData = (phones) => {
             </div>
         `
         cardContainer.appendChild(div);
-    })
+    });
+    loadingSpinner(false);
 }
 
+//search function
 const handleSearch = () => {
+    loadingSpinner(true);
     const inputValue = searchInput.value.trim();
     loadData(inputValue);
     // reset input
     searchInput.value = '';
+}
+
+//loading function
+const loadingSpinner = (isLoading) => {
+    if(isLoading){
+        loader.classList.remove('hidden');
+    }else{
+        loader.classList.add('hidden');
+    }
+   
 }
 loadData('iphone')
