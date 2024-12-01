@@ -57,18 +57,24 @@
                 </svg>
                 <input id="search-input" type="text" class="grow" placeholder="Search your phone" />
                 <span onclick="handleSearch()"
-                    class="bg-gradient-to-r from-cyan-500 to-indigo-500 px-5 py-3 text-white rounded font-bold cursor-pointer">Search</span>
+                    class="bg-gradient-to-r from-cyan-500 to-indigo-500 px-2 sm:px-5 py-3 text-white rounded font-bold cursor-pointer z-30">Search</span>
             </label>
         </div>
+        
         <!--Set Loading  spinner-->
         <div id="loader" class="text-center my-16 sm:my-20 hidden">
             <span class="loading loading-spinner loading-lg text-indigo-500"></span>
         </div>
+
+        <!-- show message container -->
+        <div id="message-container" class="text-center"></div>
+
         <!-- Card design -->
         <div id="card-container" class="grid gap-y-10 pt-5 py-5 sm:py-20 
-          grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 justify-items-center">
+          grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 justify-items-center mx-auto">
 
         </div>
+
         <div class="flex justify-center"><button
                 class="btn bg-gradient-to-r from-cyan-500 to-indigo-500 shadow-lg px-8 py-3 text-white rounded font-bold">Show
                 All</button></div>

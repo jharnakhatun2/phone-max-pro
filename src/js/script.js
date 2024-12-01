@@ -5,6 +5,7 @@ const getId = id => document.getElementById(id);
 // Select Elements
 const cardContainer = getId('card-container');
 const searchInput = getId('search-input');
+const messageContainer = getId('message-container');
 const loader = getId('loader');
 
 
@@ -21,6 +22,13 @@ const displayData = (phones) => {
 
     // clear card container
     cardContainer.textContent = '';
+
+    // If no data found, show a message
+    if (!phones || phones.length === 0) {
+        messageContainer.innerHTML = `<p class="text-xl sm:text-3xl text-center text-red-500 font-bold py-10">No phones found. Please try a different search term.</p>`;
+        loadingSpinner(false);
+        return;
+    }
 
     phones.forEach(phone => {
         const div = document.createElement('div');
@@ -58,11 +66,11 @@ const handleSearch = () => {
 
 //loading function
 const loadingSpinner = (isLoading) => {
-    if(isLoading){
+    if (isLoading) {
         loader.classList.remove('hidden');
-    }else{
+    } else {
         loader.classList.add('hidden');
     }
-   
+
 }
 loadData('iphone')
