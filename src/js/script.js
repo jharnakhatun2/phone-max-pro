@@ -1,14 +1,27 @@
-const cardContainer = document.getElementById('card-container');
+//utility functions
+const getId = id => document.getElementById(id);
+
+
+// Select Elements
+const cardContainer = getId('card-container');
+const searchInput = getId('search-input');
+
+
 //fetch API data
-const loadData = async() =>{
-    const response = await fetch('https://openapi.programming-hero.com/api/phones?search=iphone');
+const loadData = async (userText) => {
+    const response = await fetch(`https://openapi.programming-hero.com/api/phones?search=${userText}`);
     const data = await response.json();
     const phoneData = data.data;
     displayData(phoneData);
 }
 
-const displayData = (phones) =>{
-    phones.forEach( phone =>{
+//display fetch API data
+const displayData = (phones) => {
+    
+    // clear card container
+    cardContainer.textContent = '';
+
+    phones.forEach(phone => {
         const div = document.createElement('div');
         div.innerHTML = `
         <div class="card bg-base-100 w-full md:w-80 lg:w-96 shadow-xl">
@@ -22,17 +35,20 @@ const displayData = (phones) =>{
                     <p class="font-bold pb-2">Price : <span>$999</span></p>
                     <div class="card-actions">
                         <button
-                            class="btn bg-gradient-to-r from-cyan-500 to-blue-500 shadow-lg px-8 py-3 text-white rounded font-bold ">SHOW
+                            class="btn bg-gradient-to-r from-cyan-500 to-indigo-500 shadow-lg px-8 py-3 text-white rounded font-bold ">SHOW
                             DETAILS</button>
                     </div>
                 </div>
             </div>
         `
         cardContainer.appendChild(div);
-})
+    })
 }
 
-const handleSearch = () =>{
-    console.log("Search");
+const handleSearch = () => {
+    const inputValue = searchInput.value.trim();
+    loadData(inputValue);
+    // reset input
+    searchInput.value = '';
 }
-loadData()
+loadData('iphone')
