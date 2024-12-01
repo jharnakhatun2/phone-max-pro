@@ -7,6 +7,7 @@ const cardContainer = getId('card-container');
 const searchInput = getId('search-input');
 const messageContainer = getId('message-container');
 const loader = getId('loader');
+const showAllBtn = getId('show-all-btn');
 
 
 //fetch API data
@@ -29,6 +30,13 @@ const displayData = (phones) => {
         loadingSpinner(false);
         return;
     }
+    if(phones.length > 9){
+        showAllBtn.classList.remove('hidden');
+    }else{
+        showAllBtn.classList.add('hidden');
+    }
+    console.log(phones.length);
+    phones = phones.slice(0, 9);
 
     phones.forEach(phone => {
         const div = document.createElement('div');
