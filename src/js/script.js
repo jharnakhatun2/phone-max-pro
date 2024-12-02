@@ -106,19 +106,19 @@ const handleShowAll = () => {
 }
 
 //Show Details in modal
-const handleShowDetails = async(id) =>{
-    try{
-      const response = await fetch(`https://openapi.programming-hero.com/api/phone/${id}`);
-      const data = await response.json();
-      const dataDetails = data.data;
-      displayDetailsInModal(dataDetails);
-    }catch(error){
+const handleShowDetails = async (id) => {
+    try {
+        const response = await fetch(`https://openapi.programming-hero.com/api/phone/${id}`);
+        const data = await response.json();
+        const dataDetails = data.data;
+        displayDetailsInModal(dataDetails);
+    } catch (error) {
         console.error(error);
     }
 }
 
 //disply show Details data in modal
-const displayDetailsInModal = (details) =>{
+const displayDetailsInModal = (details) => {
     phoneDetailModal.textContent = '';
     console.log(details);
     const div = document.createElement('div');
