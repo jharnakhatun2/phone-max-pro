@@ -7,6 +7,7 @@ const searchInput = getId('search-input');
 const messageContainer = getId('message-container');
 const loader = getId('loader');
 const showAllBtn = getId('show-all-btn');
+const phoneDetailModal = getId('card-modal');
 
 // Variable to store fetched data
 let fetchedPhones = [];
@@ -64,7 +65,7 @@ const displayData = (phones, isShowAll) => {
                     <p class="text-gray-500">Offers a stunning ProMotion display, advanced A-series chip, and a powerful triple-camera system</p>
                     <p class="font-bold pb-2">Price : <span>$999</span></p>
                     <div class="card-actions">
-                        <button
+                        <button onclick="phone_detail_modal.showModal(); handleShowDetails('${phone.slug}')"
                             class="btn bg-gradient-to-r from-cyan-500 to-indigo-500 shadow-lg px-8 py-3 text-white rounded font-bold">SHOW DETAILS</button>
                     </div>
                 </div>
@@ -102,6 +103,46 @@ const loadingSpinner = (isLoading) => {
 const handleShowAll = () => {
     // Display all data without fetching again
     displayData(fetchedPhones, true);
+}
+
+//Show Details in modal
+const handleShowDetails = async(id) =>{
+    try{
+      const response = await fetch(`https://openapi.programming-hero.com/api/phone/${id}`);
+      const data = await response.json();
+      const dataDetails = data.data;
+      displayDetailsInModal(dataDetails);
+    }catch(error){
+        console.error(error);
+    }
+}
+
+//disply show Details data in modal
+const displayDetailsInModal = (details) =>{
+    phoneDetailModal.textContent = '';
+    console.log(details);
+    const div = document.createElement('div');
+    div.innerHTML = `
+    <div class='w-full bg-indigo-100 rounded-2xl py-5'>
+                    <img src="${details.image}"
+                        alt="" class="mx-auto rounded-2xl">
+                        </div>
+                    <div class="space-y-2 py-5">
+                        <h2 class="font-bold text-2xl"> ${details?.name || 'No name available'}</h2>
+                        <p>It is a long established fact that a reader will be distracted by the readable content of a
+                            page when looking at its layout.</p>
+                        <p><span class="font-bold">Storage :</span> ${details?.mainFeatures?.storage || 'No storage available'}</p>
+                        <p><span class="font-bold">Display Size :</span> ${details?.mainFeatures?.displaySize || 'Display no available'}</p>
+                        <p><span class="font-bold">Chipset :</span> ${details?.mainFeatures?.chipSet || 'No Chipset available'}</p>
+                        <p><span class="font-bold">Memory :</span> ${details?.mainFeatures?.memory || 'No memory available'}</p>
+                        <p><span class="font-bold">Slug :</span> ${details?.slug || 'No slug available'}</p>
+                        <p><span class="font-bold">Release date :</span> ${details?.releaseDate || 'No release date'}</p>
+                        <p><span class="font-bold">Brand :</span> ${details?.brand || 'Brand no available'}</p>
+                        <p><span class="font-bold">GPS :</span> ${details?.others?.GPS || 'No GPS available'}</p>
+                    </div>
+    `;
+    phoneDetailModal.appendChild(div);
+    phone_detail_modal.showModal();
 }
 
 // Initial load
